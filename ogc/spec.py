@@ -77,7 +77,7 @@ class SpecPlugin:
 
     # Global options applicable to all plugins
     global_options = [
-        {"key": "name", "required": False, "description": "Name of runner"},
+        {"key": "name", "required": False, "description": "Name of plugin"},
         {
             "key": "description",
             "required": False,
@@ -113,12 +113,7 @@ class SpecPlugin:
                     "will convert the dot '.' notation to underscores",
                 ]
             ),
-        },
-        {
-            "key": "fail-silently",
-            "required": False,
-            "description": "Disable exiting on failure, primarily used in conjunction with reporting..",
-        },
+        }
     ]
 
     # Options is a list of dictionary of options, descriptions, and requirements

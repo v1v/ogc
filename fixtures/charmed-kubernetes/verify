@@ -1,0 +1,9 @@
+#!/bin/bash
+set -eux
+
+git clone https://github.com/charmed-kubernetes/integration-tests
+
+pytest integration-tests/validation.py \
+       --cloud "$JUJU_CLOUD" \
+       --model "$JUJU_MODEL" \
+       --controller "$JUJU_CONTROLLER"

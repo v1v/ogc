@@ -1,0 +1,6 @@
+# List of environment variants to run against
+
+- JUJU_DEPLOY_OVERLAY="jobs/includes/1.13-edge-overlay.yaml"
+- JUJU_DEPLOY_OVERLAY="jobs/includes/1.14-edge-overlay.yaml"
+- JUJU_DEPLOY_OVERLAY="jobs/includes/1.15-edge-overlay.yaml"
+- JUJU_DEPLOY_OVERLAY="jobs/includes/1.16-edge-overlay.yaml"

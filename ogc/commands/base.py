@@ -40,46 +40,37 @@ def cli(spec, debug):
         for entry_point in pkg_resources.iter_entry_points("ogc.plugins")
     }
 
-    for phase in app.spec.keys():
-        if phase in SPEC_CORE_PLUGINS:
-            continue
-        if phase not in SPEC_PHASES:
-            app.log.error(
-                f"`{phase}` is an incorrect phase for this spec, please review the specfile."
+    for plugin in app.spec['plugin'].keys():
+        check_plugin = plugins.get(next(iter(plugin)), None)
+        if not check_plugin:
+            app.log.debug(
+                f"Could not find plugin {next(iter(plugin)).lower()}, install with `pip install ogc-plugins-{next(iter(plugin)).lower()}`"
             )
+            continue
+
+        runner = check_plugin(next(iter(plugin.values())), app.spec)
+        if runner.opt("description"):
+            _desc = runner.opt("description")
+        else:
+            setattr(
+                runner.__class__,
+                "__str__",
+                lambda x: "A Plugin, please add a __str__ attribute for a plugin description.",
+            )
+            _desc = str(runner)
+        app.log.debug(f"{phase} :: loaded : {_desc}")
+
+        # Validate spec is compatible with plugin
+        try:
+            runner.check()
+        except SpecConfigException as error:
+            app.log.error(error)
             sys.exit(1)
 
-        for plugin in app.spec[phase]:
-            check_plugin = plugins.get(next(iter(plugin)), None)
-            if not check_plugin:
-                app.log.debug(
-                    f"Could not find plugin {next(iter(plugin)).lower()}, install with `pip install ogc-plugins-{next(iter(plugin)).lower()}`"
-                )
-                continue
+        app.phases[phase].append(runner)
 
-            runner = check_plugin(phase, next(iter(plugin.values())), app.spec)
-            if runner.opt("description"):
-                _desc = runner.opt("description")
-            else:
-                setattr(
-                    runner.__class__,
-                    "__str__",
-                    lambda x: "A Plugin, please add a __str__ attribute for a plugin description.",
-                )
-                _desc = str(runner)
-            app.log.debug(f"{phase} :: loaded : {_desc}")
-
-            # Validate spec is compatible with plugin
-            try:
-                runner.check()
-            except SpecConfigException as error:
-                app.log.error(error)
-                sys.exit(1)
-
-            app.phases[phase].append(runner)
-
-            # This is to keep a definitive list of all plugins across all phases.
-            app.plugins.append(runner)
+        # This is to keep a definitive list of all plugins across all phases.
+        app.plugins.append(runner)
 
 
 def start():

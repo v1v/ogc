@@ -2,22 +2,27 @@
 """
 
 
-class SpecPhase:
-    SETUP = "setup"
-    PLAN = "plan"
+class ManifestCommand:
+    VARIANT = "variant"
+    INSTALL = "install"
+    COLLECT = "collect"
+    BOOTSTRAP = "bootstrap"
+    DEPLOY = "deploy"
+    SCRIPT = "script"
+    ARCHIVE = "archive"
     TEARDOWN = "teardown"
 
 
-# Please note this is the order in which the phases should execute
-SPEC_PHASES = [SpecPhase.SETUP, SpecPhase.PLAN, SpecPhase.TEARDOWN]
-
-
-class SpecCorePlugin:
-    DOCS = "docs"
-    META = "meta"
-
-
-SPEC_CORE_PLUGINS = [SpecCorePlugin.DOCS, SpecCorePlugin.META]
+MANIFEST_COMMANDS = [
+    ManifestCommand.VARIANT,
+    ManifestCommand.INSTALL,
+    ManifestCommand.COLLECT,
+    ManifestCommand.BOOTSTRAP,
+    ManifestCommand.DEPLOY,
+    ManifestCommand.SCRIPT,
+    ManifestCommand.ARCHIVE,
+    ManifestCommand.TEARDOWN,
+]
 
 
 class ModuleMetadata:

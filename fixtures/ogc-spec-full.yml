@@ -2,36 +2,40 @@ meta:
   name: Validate Charmed Kubernetes
   description: |
     Runs validation test suite against a vanilla deployment of Charmed Kubernetes
+  mkdocs:
+    destination: validations/ck/index.md
 
-setup:
-  - juju:
-      cloud: $JUJU_CLOUD
-      controller: $JUJU_CONTROLLER
-      model: $JUJU_MODEL
-      bootstrap:
-        debug: no
-        model-default: test-mode=true
-      deploy:
-        reuse: yes
-        bundle: $JUJU_DEPLOY_BUNDLE
-        overlay: |
-          applications:
-            kubernetes-master:
-              options:
-                channel: $SNAP_VERSION
-            kubernetes-worker:
-              options:
-                channel: $SNAP_VERSION
-        wait: yes
-        channel: $JUJU_DEPLOY_CHANNEL
-      config:
-        - kubernetes-master allow-privileged=true
-        - kubernetes-worker allow-privileged=true
+plugin:
+  juju:
+    cloud: $JUJU_CLOUD
+    controller: $JUJU_CONTROLLER
+    model: $JUJU_MODEL
+    bootstrap:
+      debug: no
+      model-default: test-mode=true
+    deploy:
+      reuse: no
+      bundle: $JUJU_DEPLOY_BUNDLE
+      overlay: |
+        applications:
+          kubernetes-master:
+            options:
+              channel: $SNAP_VERSION
+          kubernetes-worker:
+            options:
+              channel: $SNAP_VERSION
+      wait: yes
+      channel: $JUJU_DEPLOY_CHANNEL
+    config:
+      - kubernetes-master allow-privileged=true
+      - kubernetes-worker allow-privileged=true
 
 plan:
-  - runner:
+  - &BASE_JOB
+    runner:
       description: "Full validation of charmed kubernetes"
-      fail-silently: yes
+      before-script:
+        - run-plugin juju
       script: |
         #!/bin/bash
         set -eux
@@ -40,14 +44,8 @@ plan:
            --cloud $JUJU_CLOUD \
            --bunndle-channel $JUJU_DEPLOY_CHANNEL \
            --snap-channel $SNAP_VERSION
+      after-script:
+        - juju destroy-controller -y --destroy-all-models --destroy-storage $JUJU_CONTROLLER
       deps:
         - "snap:juju/latest/stable:classic"
-
-teardown:
-  - runner:
-      description: Tear down juju deployment
-      cmd: juju destroy-controller -y --destroy-all-models --destroy-storage $JUJU_CONTROLLER
-
-docs:
-  - mkdocs:
-      destination: validations/ck/index.md
+        - "pip:requirements_test.txt"

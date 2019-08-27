@@ -1,0 +1,19 @@
+# -*- mode:conf -*-
+
+# environment variants
+variant config=environment
+
+# Juju bootstrap system
+bootstrap replace-controller=yes constraints='arch=amd64'
+
+# Deploy application stack
+deploy bundle=charmed-kubernetes wait=yes channel=edge
+
+# Verify integration tests
+script config=verify wait-for-success=yes back-off=15
+
+# Collect logs, debug info
+archive file-glob=**/*.json remote=s3://jenkaas
+
+# Bring down deployment
+teardown

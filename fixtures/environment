@@ -1,0 +1,19 @@
+- SNAP_VERSION=1.13/edge JUJU_DEPLOY_BUNDLE=charmed-kubernetes
+- SNAP_VERSION=1.14/edge JUJU_DEPLOY_BUNDLE=charmed-kubernetes
+- SNAP_VERSION=1.15/edge JUJU_DEPLOY_BUNDLE=charmed-kubernetes
+- SNAP_VERSION=1.16/edge JUJU_DEPLOY_BUNDLE=charmed-kubernetes
+# Calico
+- SNAP_VERSION=1.13/edge JUJU_DEPLOY_BUNDLE=kubernetes-calico
+- SNAP_VERSION=1.14/edge JUJU_DEPLOY_BUNDLE=kubernetes-calico
+- SNAP_VERSION=1.15/edge JUJU_DEPLOY_BUNDLE=kubernetes-calico
+- SNAP_VERSION=1.16/edge JUJU_DEPLOY_BUNDLE=kubernetes-calico
+# Tigera
+- SNAP_VERSION=1.13/edge JUJU_DEPLOY_BUNDLE=kubernetes-tigera-secure-ee
+- SNAP_VERSION=1.14/edge JUJU_DEPLOY_BUNDLE=kubernetes-tigera-secure-ee
+- SNAP_VERSION=1.15/edge JUJU_DEPLOY_BUNDLE=kubernetes-tigera-secure-ee
+- SNAP_VERSION=1.16/edge JUJU_DEPLOY_BUNDLE=kubernetes-tigera-secure-ee
+# NVidia
+- SNAP_VERSION=1.13/edge JUJU_DEPLOY_BUNDLE=charmed-kubernetes JUJU_DEPLOY_OVERLAY="jobs/includes/1.13-edge-nvidia-overlay.yaml"
+- SNAP_VERSION=1.14/edge JUJU_DEPLOY_BUNDLE=charmed-kubernetes JUJU_DEPLOY_OVERLAY="jobs/includes/1.14-edge-nvidia-overlay.yaml"
+- SNAP_VERSION=1.15/edge JUJU_DEPLOY_BUNDLE=charmed-kubernetes JUJU_DEPLOY_OVERLAY="jobs/includes/1.15-edge-nvidia-overlay.yaml"
+- SNAP_VERSION=1.16/edge JUJU_DEPLOY_BUNDLE=charmed-kubernetes JUJU_DEPLOY_OVERLAY="jobs/includes/1.16-edge-nvidia-overlay.yaml"
