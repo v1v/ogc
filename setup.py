@@ -38,6 +38,7 @@ setuptools.setup(
         "python-dotenv==0.10.3",
         "tabulate==0.8.3",
         "boto3==1.12.2",
+        "redis==3.4.1"
     ],
     zip_safe=False,
 )
