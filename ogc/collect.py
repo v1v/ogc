@@ -60,7 +60,7 @@ class Collector:
     def artifacts(self):
         """ Tars up any artifacts in the job directory
         """
-        cmd_ok(f"tar cvzf {self.workdir}/artifacts.tar.gz {self.workdir}/*", shell=True)
+        cmd_ok(f"tar -C {self.workdir} -cvzf artifacts.tar.gz *", shell=True)
 
     def push(self, profile_name, region_name, bucket, db_key, files):
         """ Pushes files to s3, needs AWS configured prior
