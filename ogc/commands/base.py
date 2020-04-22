@@ -81,6 +81,7 @@ def cli(spec, debug):
 
         # Collect artifacts
         collect.artifacts()
+        collect.analyze()
         collect.push(
             "default",
             "us-east-1",

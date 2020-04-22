@@ -23,6 +23,7 @@ setuptools.setup(
         ]
     },
     install_requires=[
+        "columbo>=0.0.4",
         "click>=7.0,<8.0",
         "jinja2>=2.10,<3.0",
         "dict-deep==2.0.2",
