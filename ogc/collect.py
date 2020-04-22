@@ -67,7 +67,7 @@ class Collector:
         """
         cmd_ok(f"columbo --output-dir {self.workdir}/_out {self.workdir}/artifacts.tar.gz")
         columbo_report_json = Path(self.workdir) / "_out/columbo-report.json"
-        self.setk("columbo-results", columbo_report_json.read_text())
+        self.setk("columbo_results", columbo_report_json.read_text())
 
     def push(self, profile_name, region_name, bucket, db_key, files):
         """ Pushes files to s3, needs AWS configured prior
