@@ -65,9 +65,14 @@ class Collector:
     def analyze(self):
         """ Analyzes artifacts using columbo
         """
-        cmd_ok(f"columbo --output-dir {self.workdir}/_out {self.workdir}/artifacts.tar.gz")
-        columbo_report_json = Path(self.workdir) / "_out/columbo-report.json"
-        self.setk("columbo_results", columbo_report_json.read_text())
+        cmd_ok(f"columbo --output-dir {self.workdir}/_out {self.workdir}/artifacts.tar.gz", shell=True)
+        self.push(
+            "default",
+            "us-east-1",
+            "jenkaas",
+            "columbo_results",
+            [f"{self.workdir}/_out/columbo-report.json"],
+        )
 
     def push(self, profile_name, region_name, bucket, db_key, files):
         """ Pushes files to s3, needs AWS configured prior
