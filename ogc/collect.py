@@ -60,6 +60,14 @@ class Collector:
     def artifacts(self):
         """ Tars up any artifacts in the job directory
         """
+        self.to_json()
+        self.push(
+            "default",
+            "us-east-1",
+            "jenkaas",
+            "job_metadata",
+            [f"{self.workdir}/metadata.json"],
+        )
         cmd_ok(f"cd {self.workdir} && tar cvzf artifacts.tar.gz *", shell=True)
 
     def analyze(self):
@@ -110,6 +118,6 @@ class Collector:
     def to_json(self):
         """ Write metadata to json
         """
-        Path(f"{self.workdir}/metadata-{self.job_id}.json").write_text(
+        Path(f"{self.workdir}/metadata.json").write_text(
             json.dumps(dict(app.redis.hgetall(self.job_id)))
         )
