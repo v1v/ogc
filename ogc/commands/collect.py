@@ -37,6 +37,24 @@ def get_key(db_key):
     click.echo(db_val)
 
 
+@cli.command()
+@click.option(
+    "--profile", metavar="<profile>", required=True, help="s3 profile", default="default"
+)
+@click.option(
+    "--region", metavar="<region>", required=True, help="s3 region", default="us-east-1"
+)
+@click.option(
+    "--bucket", metavar="<bucket>", required=True, help="s3 bucket", default="jenkaas"
+)
+@click.argument("db_key")
+@click.argument("files")
+def push(profile, region, bucket, db_key, files):
+    JOBID = os.environ["OGC_JOB_ID"]
+    WORKDIR = os.environ["OGC_JOB_WORKDIR"]
+
+    Collector(JOBID, WORKDIR).push(profile, region, bucket, db_key, files)
+
 def start():
     """
     Starts app
