@@ -55,6 +55,17 @@ def push(profile, region, bucket, db_key, files):
 
     Collector(JOBID, WORKDIR).push(profile, region, bucket, db_key, files)
 
+
+@cli.command()
+def stats():
+    """ output stats
+    """
+    JOBID = os.environ["OGC_JOB_ID"]
+    WORKDIR = os.environ["OGC_JOB_WORKDIR"]
+
+    Collector(JOBID, WORKDIR).to_json()
+
+
 def start():
     """
     Starts app

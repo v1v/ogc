@@ -60,7 +60,6 @@ class Collector:
     def artifacts(self):
         """ Tars up any artifacts in the job directory
         """
-        self.to_json()
         self.push(
             "default",
             "us-east-1",
