@@ -60,13 +60,6 @@ class Collector:
     def artifacts(self):
         """ Tars up any artifacts in the job directory
         """
-        self.push(
-            "default",
-            "us-east-1",
-            "jenkaas",
-            "job_metadata",
-            [f"{self.workdir}/metadata.json"],
-        )
         cmd_ok(f"cd {self.workdir} && tar cvzf artifacts.tar.gz *", shell=True)
 
     def analyze(self):
